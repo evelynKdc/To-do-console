@@ -63,6 +63,21 @@ class Tareas {
   }
 
 
+  toggleTareasCompletadas(ids=[]){
+
+    ids.forEach(id=>{
+      const tarea = this._listado[id];
+      if (!tarea.completadoEn) {
+        tarea.completadoEn= new Date().toDateString();
+      }
+
+      this.listarArreglo.forEach(tarea=>{
+        if (!ids.includes(tarea.id)) {
+          this._listado[tarea.id].completadoEn=null;
+        }
+      })
+    })
+  }
 
   borrarTarea(id=''){
     if (this._listado[id]) {

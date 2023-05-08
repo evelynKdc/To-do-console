@@ -117,10 +117,39 @@ const inquirerConfirm = async (message) => {
   return confirm;
 };
 
+const inquirerCheck = async (tareas = []) => {
+  const choices = tareas.map((tarea) => {
+
+    return {
+      value: tarea.id,
+      name: `${tarea.desc}`,
+      checked: tarea.completadoEn ? true : false
+    };
+  });
+
+  
+
+  const questionscheck = [
+    {
+      type: "checkbox",
+      name: "ids",
+      message: "¿Que tareas desea modificar?",
+      choices,
+    },
+  ];
+
+  const { ids } = await inquirer.prompt(questionscheck);
+  return ids;
+};
+
+
+
+
 module.exports = {
   inquirerMenu,
   inquirerPause,
   inquirerReadInput,
   inquirerDeleteOptions,
   inquirerConfirm,
+  inquirerCheck
 };

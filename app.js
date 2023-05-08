@@ -7,6 +7,7 @@ const {
   inquirerReadInput,
   inquirerDeleteOptions,
   inquirerConfirm,
+  inquirerCheck,
 } = require("./helpers/inquirer");
 const { menu, pause } = require("./helpers/mensajes");
 const Tarea = require("./models/tarea");
@@ -44,6 +45,10 @@ const main = async () => {
         break;
       case "4":
         tareas.mostrarPendientesCompletadas(false); //completadas=false, only shows 'pendientes'
+        break;
+        case "5":
+        const ids = await inquirerCheck(tareas.listarArreglo);
+        tareas.toggleTareasCompletadas(ids);
         break;
       case "6":
         const id = await inquirerDeleteOptions(tareas.listarArreglo);
