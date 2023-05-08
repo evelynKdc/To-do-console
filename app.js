@@ -5,6 +5,8 @@ const {
   inquirerMenu,
   inquirerPause,
   inquirerReadInput,
+  inquirerDeleteOptions,
+  inquirerConfirm,
 } = require("./helpers/inquirer");
 const { menu, pause } = require("./helpers/mensajes");
 const Tarea = require("./models/tarea");
@@ -42,6 +44,20 @@ const main = async () => {
         break;
       case "4":
         tareas.mostrarPendientesCompletadas(false); //completadas=false, only shows 'pendientes'
+        break;
+      case "6":
+        const id = await inquirerDeleteOptions(tareas.listarArreglo);
+
+        if (id !== "0") {
+          const confirmation = await inquirerConfirm(
+            "¿Está seguro de borrar esta tarea?"
+          );
+          if (confirmation) {
+            tareas.borrarTarea(id);
+            console.log("\nTarea borrada exitosamente".green);
+          }
+        }
+
         break;
     }
 

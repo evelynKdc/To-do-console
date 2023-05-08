@@ -77,8 +77,50 @@ const inquirerReadInput = async (message) => {
   return input;
 };
 
+const inquirerDeleteOptions = async (tareas = []) => {
+  const choices = tareas.map((tarea, i) => {
+    const index = `${i + 1}. `.green;
+    return {
+      value: tarea.id,
+      name: `${index}${tarea.desc}`,
+    };
+  });
+
+  choices.unshift({
+    value: '0',
+    name: '0.'.green + ' Cancelar'
+  })
+
+  const questionsDelete = [
+    {
+      type: "list",
+      name: "id",
+      message: "¿Que tarea deseas borrar?",
+      choices,
+    },
+  ];
+
+  const { id } = await inquirer.prompt(questionsDelete);
+  return id;
+};
+
+const inquirerConfirm = async (message) => {
+  const questionConfirm = [
+    {
+      type: "confirm",
+      name: "confirm",
+      message,
+    },
+  ];
+  const { confirm } = await inquirer.prompt(questionConfirm);
+
+  return confirm;
+};
+
 module.exports = {
   inquirerMenu,
   inquirerPause,
   inquirerReadInput,
+  inquirerDeleteOptions,
+  inquirerConfirm,
 };
