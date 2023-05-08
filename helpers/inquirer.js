@@ -1,7 +1,7 @@
 require("colors");
 const inquirer = require("inquirer");
 
-const questionsMenu = [  
+const questionsMenu = [
   {
     type: "list",
     name: "option",
@@ -9,31 +9,31 @@ const questionsMenu = [
     choices: [
       {
         value: "1",
-        name: "1. Crear tarea",
+        name: `${"1.".green} Crear tarea`,
       },
       {
         value: "2",
-        name: "2. Listar tareas",
+        name: `${"2.".green} Listar tareas`,
       },
       {
         value: "3",
-        name: "3. Listar tareas completadas",
+        name: `${"3.".green} Listar tareas completadas`,
       },
       {
         value: "4",
-        name: "4. Listar tareas pendientes",
+        name: `${"4.".green} Listar tareas pendientes`,
       },
       {
         value: "5",
-        name: "5. Completar tarea(s)",
+        name: `${"5.".green} Completar tarea(s)`,
       },
       {
         value: "6",
-        name: "6. Borrar tarea",
+        name: `${"6.".green} Borrar tarea`,
       },
       {
         value: "0",
-        name: "0. Salir",
+        name: `${"0.".green} Salir`,
       },
     ],
   },
@@ -42,7 +42,7 @@ const questionsMenu = [
 const inquirerMenu = async () => {
   console.clear();
   console.log("========================================".green);
-  console.log("          Seleccione una opción         ".green);
+  console.log("          Seleccione una opción         ".white);
   console.log("========================================\n".green);
 
   const { option } = await inquirer.prompt(questionsMenu); //inquirer prompt function where the result is option from the restruture object
@@ -59,30 +59,26 @@ const inquirerPause = async () => {
     },
   ];
 
-
-  console.log('\n');
+  console.log("\n");
   await inquirer.prompt(questionsPause); //a inquirer prompt to have a pause beetwen the decisions
 };
 
-
-
-const inquirerReadInput = async (message) =>{
+const inquirerReadInput = async (message) => {
   const questionInput = [
     {
       type: "input",
       name: "input",
-      message
+      message,
     },
   ];
 
   const { input } = await inquirer.prompt(questionInput); //a inquuirer prompt for to read all the inputs in differents decisions
 
   return input;
-
-}
+};
 
 module.exports = {
   inquirerMenu,
   inquirerPause,
-  inquirerReadInput
+  inquirerReadInput,
 };

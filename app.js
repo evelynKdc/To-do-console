@@ -1,5 +1,6 @@
 require("colors");
 
+const { guardarDb, leerDb } = require("./helpers/guardarArchivo");
 const {
   inquirerMenu,
   inquirerPause,
@@ -15,6 +16,12 @@ const main = async () => {
   let opt = " ";
 
   const tareas = new Tareas();
+  const data = leerDb();
+
+  if (data) {
+    tareas.cargarTareas(data);
+  }
+
   do {
     opt = await inquirerMenu();
     // console.log({opt});
@@ -27,11 +34,18 @@ const main = async () => {
         break;
 
       case "2":
-        console.log(tareas._listado);
-
+        //console.log(tareas.listarArreglo);
+        tareas.mostrarTareas();
+        break;
+      case "3":
+        tareas.mostrarPendientesCompletadas(true); //completadas=true, only shows 'completadas'
+        break;
+      case "4":
+        tareas.mostrarPendientesCompletadas(false); //completadas=false, only shows 'pendientes'
         break;
     }
 
+    guardarDb(tareas.listarArreglo);
     opt !== "0" && (await inquirerPause());
   } while (opt !== "0");
 };
