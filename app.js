@@ -8,9 +8,9 @@ const {
   inquirerDeleteOptions,
   inquirerConfirm,
   inquirerCheck,
+  inquirerImportant,
 } = require("./helpers/inquirer");
-const { menu, pause } = require("./helpers/mensajes");
-const Tarea = require("./models/tarea");
+
 const Tareas = require("./models/tareas");
 
 console.clear();
@@ -32,7 +32,9 @@ const main = async () => {
     switch (opt) {
       case "1":
         const desc = await inquirerReadInput("Descripción:");
-        tareas.crearTarea(desc);
+        const important = await inquirerImportant();
+        //console.log({important});
+        tareas.crearTarea(desc,important);
 
         break;
 

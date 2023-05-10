@@ -19,8 +19,8 @@ class Tareas {
     return listado;
   }
 
-  crearTarea(desc = "") {
-    const tarea = new Tarea(desc);
+  crearTarea(desc = "", important = "") {
+    const tarea = new Tarea(desc, important);
 
     this._listado[tarea.id] = tarea;
   }
@@ -35,9 +35,22 @@ class Tareas {
     console.log();
     this.listarArreglo.forEach((tarea, index) => {
       const cont = `${index + 1}. `.green;
-      const { desc, completadoEn } = tarea;
+      const { desc, completadoEn, important } = tarea;
       const estado = completadoEn ? "Completado".green : "Pendiente".red;
-      console.log(`${cont + desc} :: ${estado}`);
+      let imp = "";
+      switch (important) {
+        case "Alto":
+          imp = ` (Alto)`.magenta;
+          break;
+
+        case "Medio":
+          imp = ` (Medio)`.yellow;
+          break;
+        case "Bajo":
+          imp = ` (Bajo)`.cyan;
+          break;
+      }
+      console.log(`${cont}${desc}${imp} :: ${estado}`);
     });
   }
 
@@ -45,41 +58,58 @@ class Tareas {
     console.log();
     let cont = 0;
     this.listarArreglo.forEach((tarea) => {
-      const { desc, completadoEn } = tarea;
+      const { desc, completadoEn, important } = tarea;
       const estado = completadoEn ? "Completado".green : "Pendiente".red;
+      let imp = "";
+      switch (important) {
+        case "Alto":
+          imp = ` (Alto)`.magenta;
+          break;
+
+        case "Medio":
+          imp = ` (Medio)`.yellow;
+          break;
+        case "Bajo":
+          imp = ` (Bajo)`.cyan;
+          break;
+      }
 
       if (completadas) {
         if (completadoEn) {
           cont++;
-          console.log(`${cont.toString().green}${".".green} ${desc} :: ${completadoEn.cyan}`);
+          console.log(
+            `${cont.toString().green}${".".green}${desc}${imp}:: ${
+              completadoEn.cyan
+            }`
+          );
         }
       } else {
         if (!completadoEn) {
           cont++;
-          console.log(`${cont.toString().green}${".".green} ${desc} :: ${estado}`);
+          console.log(
+            `${cont.toString().green}${".".green}${desc}${imp} :: ${estado}`
+          );
         }
       }
     });
   }
 
-
-  toggleTareasCompletadas(ids=[]){
-
-    ids.forEach(id=>{
+  toggleTareasCompletadas(ids = []) {
+    ids.forEach((id) => {
       const tarea = this._listado[id];
       if (!tarea.completadoEn) {
-        tarea.completadoEn= new Date().toDateString();
+        tarea.completadoEn = new Date().toDateString();
       }
 
-      this.listarArreglo.forEach(tarea=>{
+      this.listarArreglo.forEach((tarea) => {
         if (!ids.includes(tarea.id)) {
-          this._listado[tarea.id].completadoEn=null;
+          this._listado[tarea.id].completadoEn = null;
         }
-      })
-    })
+      });
+    });
   }
 
-  borrarTarea(id=''){
+  borrarTarea(id = "") {
     if (this._listado[id]) {
       delete this._listado[id];
     }

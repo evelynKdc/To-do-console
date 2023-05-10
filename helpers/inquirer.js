@@ -77,6 +77,33 @@ const inquirerReadInput = async (message) => {
   return input;
 };
 
+const inquirerImportant = async () => {
+  const questionsImportant = [
+    {
+      type: "list",
+      name: "important",
+      message: "¿Que tan importante es la tarea?",
+      choices: [
+        {
+          value: "Alto",
+          name: `Alto`.green,
+        },
+        {
+          value: "Medio",
+          name: `Medio`.green,
+        },
+        {
+          value: "Bajo",
+          name: `Bajo`.green,
+        },
+      ],
+    },
+  ];
+
+  const { important } = await inquirer.prompt(questionsImportant);
+  return important;
+};
+
 const inquirerDeleteOptions = async (tareas = []) => {
   const choices = tareas.map((tarea, i) => {
     const index = `${i + 1}. `.green;
@@ -87,9 +114,9 @@ const inquirerDeleteOptions = async (tareas = []) => {
   });
 
   choices.unshift({
-    value: '0',
-    name: '0.'.green + ' Cancelar'
-  })
+    value: "0",
+    name: "0.".green + " Cancelar",
+  });
 
   const questionsDelete = [
     {
@@ -119,15 +146,12 @@ const inquirerConfirm = async (message) => {
 
 const inquirerCheck = async (tareas = []) => {
   const choices = tareas.map((tarea) => {
-
     return {
       value: tarea.id,
       name: `${tarea.desc}`,
-      checked: tarea.completadoEn ? true : false
+      checked: tarea.completadoEn ? true : false,
     };
   });
-
-  
 
   const questionscheck = [
     {
@@ -142,14 +166,12 @@ const inquirerCheck = async (tareas = []) => {
   return ids;
 };
 
-
-
-
 module.exports = {
   inquirerMenu,
   inquirerPause,
   inquirerReadInput,
   inquirerDeleteOptions,
   inquirerConfirm,
-  inquirerCheck
+  inquirerCheck,
+  inquirerImportant,
 };
